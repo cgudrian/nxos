@@ -4,10 +4,10 @@
 #	objdump --disassemble-all -bbinary -marm7tdmi flash.bin > flash.asm
 #
 
-CC=`which arm-elf-gcc`
-AS=`which arm-elf-as`
-LD=`which arm-elf-ld`
-OBJCOPY=`which arm-elf-objcopy`
+CC=`which arm-none-eabi-gcc`
+AS=`which arm-none-eabi-as`
+LD=`which arm-none-eabi-ld`
+OBJCOPY=`which arm-none-eabi-objcopy`
 
 TARGET = ../flash_driver.bin
 
