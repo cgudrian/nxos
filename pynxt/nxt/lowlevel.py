@@ -8,6 +8,7 @@ def enumerate_usb():
     """Return a generator yielding all attached USB devices."""
     busses = usb.busses()
     for bus in busses:
+        print(f"Checking bus...")
         devices = bus.devices
         for dev in devices:
             yield dev
@@ -15,7 +16,9 @@ def enumerate_usb():
 def get_device(vendor_id, product_id, version=0, timeout=None):
     """Return the first device matching the given vendor/product ID."""
     while True:
+        print("Enumerating USB...")
         for dev in enumerate_usb():
+            print(f"VID:{dev.idVendor} PID:{dev.idProduct}")
             if (dev.idVendor == vendor_id and
                 dev.idProduct == product_id and
                 dev.iSerialNumber == version):

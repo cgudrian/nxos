@@ -1,6 +1,6 @@
 import sys
 import struct
-import lowlevel
+from .lowlevel import get_device
 
 ATMEL_VENDOR_ID = 0x03eb
 SAMBA_PRODUCT_ID = 0x6124
@@ -26,7 +26,7 @@ class SambaBrick(object):
             pass
 
     def open(self, timeout=None):
-        self.usb = lowlevel.get_device(
+        self.usb = get_device(
             ATMEL_VENDOR_ID, SAMBA_PRODUCT_ID, timeout=timeout)
         if not self.usb:
             raise SambaOpenError("Could not find a SAM-BA brick to connect to")
@@ -63,7 +63,7 @@ class SambaBrick(object):
         self.usb.write(_command2(code, address, size))
 
         res = self.usb.read(size)
-        return struct.unpack('<%c' % struct_code, res)[0]
+        return struct.unpack('<%c' % struct_code, bytes(res, 'ascii'))[0]
 
     def read_byte(self, address):
         return self._read_common('o', address, 1, 'B')

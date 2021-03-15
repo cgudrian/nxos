@@ -4,11 +4,11 @@ import math
 import os
 import os.path
 import sys
-import samba
 
 # The flash driver binary should be located directly inside the nxt
 # package.
-FLASH_DRIVER_PATH = os.path.join(os.path.dirname(__file__), 'flash_driver.bin')
+FLASH_DRIVER_PATH = os.path.join(
+    os.path.dirname(__file__), '../flash_driver.bin')
 
 # Mnemonics for the addresses of the various registers used by the flash
 # controller.
@@ -77,7 +77,7 @@ class FlashController(object):
             return
 
         self._brick.write_word(MC_FMR, FLASH_REGION_LOCK_SETTING)
-        for i in xrange(16):
+        for i in range(16):
             mask = 1 << (16+i)
             if (status & mask):
                 self._brick.write_word(MC_FCR, _unlock_region(i))
@@ -113,7 +113,7 @@ class FlashController(object):
             raise InvalidFirmwareImage(
                 "The firmware image must be smaller than 256kB")
 
-        for page_num in xrange(num_pages):
+        for page_num in range(num_pages):
             self._brick.write_word(FLASH_TARGET_BLOCK_NUM_ADDR, page_num)
             self._brick.write_buffer(FLASH_BLOCK_DATA_ADDR,
                                      firmware[page_num*256:(page_num+1)*256])
